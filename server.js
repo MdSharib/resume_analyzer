@@ -5,6 +5,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
 import cors from "cors";
 import multer from "multer";
+import {PdfReader} from "pdfreader";
+
 
 
 
@@ -34,6 +36,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
+const extractData = (path) => {
+  new PdfReader().parseFileItems(path, (err, item) => {
+    if(err) console.log(err);
+    else if(!item) console.warn("end of file");
+    else if(item.text) console.log(item.text);
+  })
+}
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -41,7 +50,7 @@ app.use("/api/v1/auth", authRoutes);
 app.post('/upload', upload.single('file'), (req, res) => {
   console.log(req.body);
   console.log(req.file);
-  
+  extractData(req.file.path);
 });
 
 
