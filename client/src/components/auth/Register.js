@@ -17,8 +17,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== cPassword) {
-      console.log("enter same password");
-      setPText(true);
+      setPText("Please enter same password");
       return;
     }
 
@@ -32,8 +31,8 @@ const Register = () => {
 
       if (res && res.data.success) {
         setText(true);
-        setPText(false);
-        
+        setPText("");
+
         setName("");
         setEmail("");
         setPassword("");
@@ -41,10 +40,11 @@ const Register = () => {
         console.log(res.data);
         // navigate("/");
       } else {
-        console.log("error rgister");
+        setPText("Email failed!");
+        // console.log(error.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -99,23 +99,19 @@ const Register = () => {
               Successfully registered! Please check your email for verification.
             </div>
           )}
-          {ptext && (
-            <div className={styles.error}>
-              Please enter same password
-            </div>
-          )}
+          {ptext && <div className={styles.error}>{ptext}</div>}
           <button type="submit" className={styles.btn}>
             REGISTER
           </button>
           <button
-          type="button"
-          className={styles.loginBtn}
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Already have account?Login
-        </button>
+            type="button"
+            className={styles.loginBtn}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Already have account?Login
+          </button>
         </div>
       </form>
     </div>
