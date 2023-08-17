@@ -6,8 +6,7 @@ import authRoutes from "./routes/authRoute.js";
 import cors from "cors";
 import multer from "multer";
 import {PdfReader} from "pdfreader";
-
-
+import summaryModel from './models/summaryModel.js'
 
 
 //config env
@@ -24,6 +23,7 @@ app.use(cors());
 app.use(express.json()); 
 app.use(morgan("dev")); 
 
+let phone = "";
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
@@ -52,6 +52,11 @@ const extractData = (path) => {
     });
   });
 }
+app.post('/phone', (req, res) => {
+  phone = req.body.phone;
+  res.status(200).send('Data received');
+});
+
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -60,7 +65,21 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   console.log(req.body);
   console.log(req.file);
   const text = await extractData(req.file.path);
-  console.log(text);
+  // console.log(text);
+  try{
+    const summary = await new summaryModel({
+      phone: phone,
+      summary: text,
+    }).save();
+    res.status(201).send({
+      success: true,
+      message: "summary stored Successfully",
+      text,
+    });
+  }catch(error){
+    console.log(error.message)
+  }
+  
 });
 
 

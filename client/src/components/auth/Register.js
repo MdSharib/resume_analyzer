@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [text, setText] = useState(false);
@@ -25,6 +26,7 @@ const Register = () => {
       const res = await axios.post("/api/v1/auth/register", {
         name,
         email,
+        phone,
         password,
         cPassword,
       });
@@ -74,6 +76,17 @@ const Register = () => {
               required
             />
           </div>
+          <div className={styles["input-div"]}>
+            <input
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter Your Phone"
+              className={styles.input}
+              required
+            />
+          </div>
+
           <div className={styles["input-div"]}>
             <input
               type="password"

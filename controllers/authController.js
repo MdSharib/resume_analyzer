@@ -54,13 +54,16 @@ export const VerifyMail = async (req, res) => {
 // registering the user
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email,phone, password } = req.body;
     //validations
     if (!name) {
       return res.send({ error: "Name is Required" });
     }
     if (!email) {
       return res.send({ message: "Email is Required" });
+    }
+    if (!phone) {
+      return res.send({ message: "Phone no is Required" });
     }
     if (!password) {
       return res.send({ message: "Password is Required" });
@@ -82,6 +85,7 @@ export const registerController = async (req, res) => {
     const user = await new userModel({
       name,
       email,
+      phone,
       password: hashedPassword,
     }).save();
 
@@ -103,6 +107,7 @@ export const registerController = async (req, res) => {
     });
   }
 };
+
 
 //POST LOGIN
 export const loginController = async (req, res) => {
@@ -142,6 +147,7 @@ export const loginController = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         isVerified: user.isVerified,
       },
       token,
