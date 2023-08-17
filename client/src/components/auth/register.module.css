@@ -14,7 +14,6 @@
 }
 
 .form-styling{
-    /* padding: 20px 15px; */
     width: 38%;
     border-radius: 15px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -68,8 +67,23 @@
     padding: 11px;
     
 }
+.loginBtn{
+    background-color: #564ff2;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    font-size: 17px;
+    padding: 11px;
+    margin-left: 15px;
+    
+}
 
 .success{
     color: green;
+    margin: 10px 0px;
+}
+.error{
+    color: red;
     margin: 10px 0px;
 }

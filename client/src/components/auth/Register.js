@@ -10,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [text, setText] = useState(false);
+  const [ptext, setPText] = useState(false);
   const navigate = useNavigate();
 
   // form function
@@ -17,6 +18,7 @@ const Register = () => {
     e.preventDefault();
     if (password !== cPassword) {
       console.log("enter same password");
+      setPText(true);
       return;
     }
 
@@ -30,6 +32,8 @@ const Register = () => {
 
       if (res && res.data.success) {
         setText(true);
+        setPText(false);
+        
         setName("");
         setEmail("");
         setPassword("");
@@ -95,9 +99,23 @@ const Register = () => {
               Successfully registered! Please check your email for verification.
             </div>
           )}
+          {ptext && (
+            <div className={styles.error}>
+              Please enter same password
+            </div>
+          )}
           <button type="submit" className={styles.btn}>
             REGISTER
           </button>
+          <button
+          type="button"
+          className={styles.loginBtn}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Already have account?Login
+        </button>
         </div>
       </form>
     </div>

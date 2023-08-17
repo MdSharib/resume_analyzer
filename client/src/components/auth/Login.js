@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./login.module.css";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,46 +35,47 @@ const Login = () => {
     }
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <i />
-          <span>Login</span>
-        </div>
-        <h5>Sign into your account</h5>
-        <div>
+    <div className={styles["div-styling"]}>
+      <form onSubmit={handleSubmit} className={styles["form-styling"]}>
+        <h5 className={styles.heading}>Login into your account</h5>
+        <div className={styles.inner}>
+        <div className={styles["input-div"]}>
           <input
             type="email"
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter Your Email "
+            placeholder="Enter Your Email"
+            className={styles.input}
             required
           />
-          <label htmlFor="form2Example17">Email address</label>
+          <label htmlFor="form2Example17"></label>
         </div>
-        <div>
+        <div className={styles["input-div"]}>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter Your Password"
+            className={styles.input}
             required
           />
-          <label htmlFor="form2Example27">Password</label>
+          <label htmlFor="form2Example27"></label>
         </div>
         <div>
-          <button type="submit">Login</button>
+          <button type="submit" className={styles.loginBtn}>Login</button>
         </div>
-        {error && <p>Invalid Credentials!</p>}
+        {error && <p className={styles.error}>Invalid Credentials!</p>}
         <button
           type="button"
+          className={styles.btn}
           onClick={() => {
             navigate("/register");
           }}
         >
-          Didnt have an accont?Sign Up
+          Don't have an account?Sign Up
         </button>
+        </div>
       </form>
     </div>
   );
