@@ -1,8 +1,55 @@
 import userModel from "../models/userModel.js";
-
+import nodemailer from "nodemailer";
 import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 
+
+const sendVerifyMail = (user, email, user_id) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "mdsharibdev@gmail.com",
+        pass: "dmuwrkdimnkubdqb",
+      },
+    });
+
+    const mailOptions = {
+      from: "resumetestingnodemailer@gmail.com",
+      to: email,
+      subject: "Please Verify your mail", // Subject line
+      html: `<p>Hello ${user}, please click here <a href="http://localhost:3000/verify/?id=${user_id}">Verify</a> your mail </p>`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email has been sent to ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const VerifyMail = async (req, res) => {
+  try {
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isVerified: 1 } },
+      { new: true, useFindAndModify: false }
+    );
+    res.status(200).send({
+      success: true,
+      message: "User Verified successfully",
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 // registering the user
 export const registerController = async (req, res) => {
@@ -37,6 +84,10 @@ export const registerController = async (req, res) => {
       email,
       password: hashedPassword,
     }).save();
+
+    if (user) {
+      sendVerifyMail(name, email, user._id);
+    }
 
     res.status(201).send({
       success: true,
@@ -104,6 +155,3 @@ export const loginController = async (req, res) => {
     });
   }
 };
-
-
-

@@ -2,6 +2,7 @@ import express from "express";
 import {
   registerController,
   loginController,
+  VerifyMail,
 } from "../controllers/authController.js";
 
 //router object
@@ -12,9 +13,6 @@ router.post("/register", registerController);
 
 //LOGIN || POST
 router.post("/login", loginController);
-
-
-
+router.get("/verify/:id", VerifyMail);
 
 export default router;
-
