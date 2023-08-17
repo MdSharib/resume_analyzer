@@ -20,7 +20,7 @@ const VerifyMail = () => {
     updateInfo();
   }, []);
 
-  return <div>Your mail have been verified successfully!</div>;
+  return <div>Your mail have been verified successfully! Please Login again</div>;
 };
 
 export default VerifyMail;

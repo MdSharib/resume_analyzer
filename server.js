@@ -37,20 +37,30 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 const extractData = (path) => {
-  new PdfReader().parseFileItems(path, (err, item) => {
-    if(err) console.log(err);
-    else if(!item) console.warn("end of file");
-    else if(item.text) console.log(item.text);
-  })
+  return new Promise((resolve, reject) => {
+    let text = "";
+    new PdfReader().parseFileItems(path, (err, item) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      } else if (!item) {
+        console.warn("end of file");
+        resolve(text);
+      } else if (item.text) {
+        text += item.text;
+      }
+    });
+  });
 }
 
 //routes
 app.use("/api/v1/auth", authRoutes);
 // upload file
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
   console.log(req.body);
   console.log(req.file);
-  extractData(req.file.path);
+  const text = await extractData(req.file.path);
+  console.log(text);
 });
 
 
