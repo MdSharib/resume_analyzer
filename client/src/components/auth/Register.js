@@ -31,6 +31,7 @@ const Register = () => {
       if (res && res.data.success) {
         console.log("success rgister");
         console.log(res.data);
+        navigate("/");
       } else {
         console.log("error rgister");
       }

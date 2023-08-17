@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,14 +19,17 @@ const Login = () => {
         password,
       });
       if (res && res.data.success) {
-        console.log("success login")
-        console.log(res.data.user);
-        console.log(res.data.token);
+        console.log("success login");
+        setError(false);
+        localStorage.setItem("auth", JSON.stringify(res.data.user));
+        navigate("/home");
       } else {
         console.log(res.data.message);
+        setError(true);
       }
     } catch (error) {
       console.log(error);
+      setError(true);
     }
   };
   return (
@@ -60,6 +64,7 @@ const Login = () => {
         <div>
           <button type="submit">Login</button>
         </div>
+        {error && <p>Invalid Credentials!</p>}
         <button
           type="button"
           onClick={() => {
