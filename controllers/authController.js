@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import nodemailer from "nodemailer";
 import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
+import summaryModel from "../models/summaryModel.js"
 
 
 const sendVerifyMail = (user, email, user_id) => {
@@ -157,6 +158,27 @@ export const loginController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in login",
+      error,
+    });
+  }
+};
+
+
+//get history of summaries
+export const historyController = async (req, res) => {
+  try {
+    console.log("history controller ->")
+    const summary = await summaryModel.find({});
+    console.log("summary controller ->" ,summary)
+    res.status(200).send({
+      success: true,
+      summary,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in history",
       error,
     });
   }

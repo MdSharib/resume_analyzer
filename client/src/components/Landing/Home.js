@@ -32,6 +32,17 @@ const Home = (props) => {
     }
   }, []);
 
+  const logoutHandler = () => {
+    localStorage.removeItem('auth');
+    navigate("/");
+  }
+
+
+  // for history of results
+  // useEffect(() => {
+
+  // }, [text])
+
   const uploadHandler = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -69,10 +80,14 @@ const Home = (props) => {
         {" "}
         Upload pdf
       </button>
-      <button className={styles.btn}>Logout</button>
+      <button type="button" className={styles.btn} onClick={() => {navigate("/history")}}>
+        {" "}
+        History
+      </button>
+      <button className={styles.btn} onClick={() => {logoutHandler}}>Logout</button>
       </div>
       <div className={styles.result}>
-        <div>Your Result Summary here-</div>
+        <div className={styles.summaryHeading}>Your Result Summary here-</div>
       {text && <div className={styles.summary}>{text}</div>}
     </div>
     </div>

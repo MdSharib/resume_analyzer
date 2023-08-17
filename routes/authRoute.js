@@ -3,6 +3,7 @@ import {
   registerController,
   loginController,
   VerifyMail,
+  historyController
 } from "../controllers/authController.js";
 
 //router object
@@ -14,5 +15,6 @@ router.post("/register", registerController);
 //LOGIN || POST
 router.post("/login", loginController);
 router.get("/verify/:id", VerifyMail);
+router.get("/history", historyController);
 
 export default router;
