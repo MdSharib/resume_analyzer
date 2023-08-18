@@ -5,6 +5,7 @@ import JWT from "jsonwebtoken";
 import summaryModel from "../models/summaryModel.js"
 
 
+
 const sendVerifyMail = (user, email, user_id) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -13,8 +14,8 @@ const sendVerifyMail = (user, email, user_id) => {
       secure: false,
       requireTLS: true,
       auth: {
-        user: "mdsharibdev@gmail.com",
-        pass: "dmuwrkdimnkubdqb",
+        user: process.env.USERNAME,
+        pass: process.env.PASSWORD,
       },
     });
 

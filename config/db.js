@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-
+import dotenv from "dotenv";
 
 
 
 const connectDB = async () => {
-  // error handling while connecting to db
+  // error handling 
   try {
     // connecting to mongo db
     const conn = await mongoose.connect(process.env.MONGO_URL);
@@ -12,7 +12,7 @@ const connectDB = async () => {
       `Conneted To Mongodb Databse ${conn.connection.host}`
     );
   } catch (error) {
-    console.log(`Errro in Mongodb ${error}`.bgRed.white);
+    console.log(`Errro in Mongodb ${error}`);
   }
 };
 

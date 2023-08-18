@@ -39,6 +39,7 @@ const Register = () => {
         setEmail("");
         setPassword("");
         setCPassword("");
+        setPhone("");
         console.log(res.data);
         // navigate("/");
       } else {

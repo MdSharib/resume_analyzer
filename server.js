@@ -25,6 +25,7 @@ app.use(morgan("dev"));
 
 let phone = "";
 
+// for uploading and extracting file
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
     return cb(null, "./assets");
@@ -56,6 +57,10 @@ app.post('/phone', (req, res) => {
   phone = req.body.phone;
   res.status(200).send('Data received');
 });
+
+
+
+
 
 
 //routes
